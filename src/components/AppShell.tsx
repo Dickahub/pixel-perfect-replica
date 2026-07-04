@@ -17,6 +17,7 @@ import { useCurrentUser, type AppRole } from "@/hooks/use-current-user";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import secelLogo from "@/assets/secel-logo.png.asset.json";
 
 type NavItem = {
   to: string;
@@ -54,7 +55,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-screen bg-muted/30">
       {/* Mobile top bar */}
       <div className="fixed inset-x-0 top-0 z-30 flex h-14 items-center justify-between border-b border-border bg-card px-4 md:hidden">
-        <div className="font-semibold tracking-tight">SRMMS</div>
+        <div className="flex items-center gap-2">
+          <img src={secelLogo.url} alt="SECEL" className="h-6 w-auto" />
+          <span className="font-semibold tracking-tight">SRMMS</span>
+        </div>
         <button
           className="rounded-md p-2 hover:bg-muted"
           onClick={() => setMobileOpen((v) => !v)}
@@ -71,7 +75,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           mobileOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        <div className="hidden h-14 items-center border-b border-border px-5 md:flex">
+        <div className="hidden h-14 items-center gap-2 border-b border-border px-5 md:flex">
+          <img src={secelLogo.url} alt="SECEL" className="h-7 w-auto" />
           <div className="text-lg font-semibold tracking-tight">SRMMS</div>
         </div>
         <nav className="flex-1 space-y-1 overflow-y-auto p-3 pt-16 md:pt-3">
