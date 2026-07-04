@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import secelLogo from "@/assets/secel-logo.png.asset.json";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
@@ -48,7 +49,10 @@ function AuthPage() {
     <div className="flex min-h-screen items-center justify-center bg-muted/40 px-4">
       <Card className="w-full max-w-sm">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">SRMMS</CardTitle>
+          <div className="flex justify-center pb-2">
+            <img src={secelLogo.url} alt="SECEL" className="h-12 w-auto" />
+          </div>
+          <CardTitle className="text-center text-2xl">SRMMS</CardTitle>
           <CardDescription>
             Smart Repair &amp; Maintenance Management System
           </CardDescription>
