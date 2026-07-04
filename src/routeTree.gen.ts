@@ -13,6 +13,12 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedClientsIndexRouteImport } from './routes/_authenticated/clients.index'
+import { Route as AuthenticatedMachinesMachineIdRouteImport } from './routes/_authenticated/machines.$machineId'
+import { Route as AuthenticatedClientsNewRouteImport } from './routes/_authenticated/clients.new'
+import { Route as AuthenticatedClientsClientIdRouteImport } from './routes/_authenticated/clients.$clientId'
+import { Route as AuthenticatedMachinesMachineIdEditRouteImport } from './routes/_authenticated/machines.$machineId.edit'
+import { Route as AuthenticatedClientsClientIdEditRouteImport } from './routes/_authenticated/clients.$clientId.edit'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -33,16 +39,63 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedClientsIndexRoute =
+  AuthenticatedClientsIndexRouteImport.update({
+    id: '/clients/',
+    path: '/clients/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMachinesMachineIdRoute =
+  AuthenticatedMachinesMachineIdRouteImport.update({
+    id: '/machines/$machineId',
+    path: '/machines/$machineId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedClientsNewRoute = AuthenticatedClientsNewRouteImport.update({
+  id: '/clients/new',
+  path: '/clients/new',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedClientsClientIdRoute =
+  AuthenticatedClientsClientIdRouteImport.update({
+    id: '/clients/$clientId',
+    path: '/clients/$clientId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMachinesMachineIdEditRoute =
+  AuthenticatedMachinesMachineIdEditRouteImport.update({
+    id: '/edit',
+    path: '/edit',
+    getParentRoute: () => AuthenticatedMachinesMachineIdRoute,
+  } as any)
+const AuthenticatedClientsClientIdEditRoute =
+  AuthenticatedClientsClientIdEditRouteImport.update({
+    id: '/edit',
+    path: '/edit',
+    getParentRoute: () => AuthenticatedClientsClientIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/clients/$clientId': typeof AuthenticatedClientsClientIdRouteWithChildren
+  '/clients/new': typeof AuthenticatedClientsNewRoute
+  '/machines/$machineId': typeof AuthenticatedMachinesMachineIdRouteWithChildren
+  '/clients/': typeof AuthenticatedClientsIndexRoute
+  '/clients/$clientId/edit': typeof AuthenticatedClientsClientIdEditRoute
+  '/machines/$machineId/edit': typeof AuthenticatedMachinesMachineIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/clients/$clientId': typeof AuthenticatedClientsClientIdRouteWithChildren
+  '/clients/new': typeof AuthenticatedClientsNewRoute
+  '/machines/$machineId': typeof AuthenticatedMachinesMachineIdRouteWithChildren
+  '/clients': typeof AuthenticatedClientsIndexRoute
+  '/clients/$clientId/edit': typeof AuthenticatedClientsClientIdEditRoute
+  '/machines/$machineId/edit': typeof AuthenticatedMachinesMachineIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -50,18 +103,48 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/clients/$clientId': typeof AuthenticatedClientsClientIdRouteWithChildren
+  '/_authenticated/clients/new': typeof AuthenticatedClientsNewRoute
+  '/_authenticated/machines/$machineId': typeof AuthenticatedMachinesMachineIdRouteWithChildren
+  '/_authenticated/clients/': typeof AuthenticatedClientsIndexRoute
+  '/_authenticated/clients/$clientId/edit': typeof AuthenticatedClientsClientIdEditRoute
+  '/_authenticated/machines/$machineId/edit': typeof AuthenticatedMachinesMachineIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/clients/$clientId'
+    | '/clients/new'
+    | '/machines/$machineId'
+    | '/clients/'
+    | '/clients/$clientId/edit'
+    | '/machines/$machineId/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/clients/$clientId'
+    | '/clients/new'
+    | '/machines/$machineId'
+    | '/clients'
+    | '/clients/$clientId/edit'
+    | '/machines/$machineId/edit'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/dashboard'
+    | '/_authenticated/clients/$clientId'
+    | '/_authenticated/clients/new'
+    | '/_authenticated/machines/$machineId'
+    | '/_authenticated/clients/'
+    | '/_authenticated/clients/$clientId/edit'
+    | '/_authenticated/machines/$machineId/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -100,15 +183,97 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/clients/': {
+      id: '/_authenticated/clients/'
+      path: '/clients'
+      fullPath: '/clients/'
+      preLoaderRoute: typeof AuthenticatedClientsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/machines/$machineId': {
+      id: '/_authenticated/machines/$machineId'
+      path: '/machines/$machineId'
+      fullPath: '/machines/$machineId'
+      preLoaderRoute: typeof AuthenticatedMachinesMachineIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/clients/new': {
+      id: '/_authenticated/clients/new'
+      path: '/clients/new'
+      fullPath: '/clients/new'
+      preLoaderRoute: typeof AuthenticatedClientsNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/clients/$clientId': {
+      id: '/_authenticated/clients/$clientId'
+      path: '/clients/$clientId'
+      fullPath: '/clients/$clientId'
+      preLoaderRoute: typeof AuthenticatedClientsClientIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/machines/$machineId/edit': {
+      id: '/_authenticated/machines/$machineId/edit'
+      path: '/edit'
+      fullPath: '/machines/$machineId/edit'
+      preLoaderRoute: typeof AuthenticatedMachinesMachineIdEditRouteImport
+      parentRoute: typeof AuthenticatedMachinesMachineIdRoute
+    }
+    '/_authenticated/clients/$clientId/edit': {
+      id: '/_authenticated/clients/$clientId/edit'
+      path: '/edit'
+      fullPath: '/clients/$clientId/edit'
+      preLoaderRoute: typeof AuthenticatedClientsClientIdEditRouteImport
+      parentRoute: typeof AuthenticatedClientsClientIdRoute
+    }
   }
 }
 
+interface AuthenticatedClientsClientIdRouteChildren {
+  AuthenticatedClientsClientIdEditRoute: typeof AuthenticatedClientsClientIdEditRoute
+}
+
+const AuthenticatedClientsClientIdRouteChildren: AuthenticatedClientsClientIdRouteChildren =
+  {
+    AuthenticatedClientsClientIdEditRoute:
+      AuthenticatedClientsClientIdEditRoute,
+  }
+
+const AuthenticatedClientsClientIdRouteWithChildren =
+  AuthenticatedClientsClientIdRoute._addFileChildren(
+    AuthenticatedClientsClientIdRouteChildren,
+  )
+
+interface AuthenticatedMachinesMachineIdRouteChildren {
+  AuthenticatedMachinesMachineIdEditRoute: typeof AuthenticatedMachinesMachineIdEditRoute
+}
+
+const AuthenticatedMachinesMachineIdRouteChildren: AuthenticatedMachinesMachineIdRouteChildren =
+  {
+    AuthenticatedMachinesMachineIdEditRoute:
+      AuthenticatedMachinesMachineIdEditRoute,
+  }
+
+const AuthenticatedMachinesMachineIdRouteWithChildren =
+  AuthenticatedMachinesMachineIdRoute._addFileChildren(
+    AuthenticatedMachinesMachineIdRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedClientsClientIdRoute: typeof AuthenticatedClientsClientIdRouteWithChildren
+  AuthenticatedClientsNewRoute: typeof AuthenticatedClientsNewRoute
+  AuthenticatedMachinesMachineIdRoute: typeof AuthenticatedMachinesMachineIdRouteWithChildren
+  AuthenticatedClientsIndexRoute: typeof AuthenticatedClientsIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedClientsClientIdRoute:
+    AuthenticatedClientsClientIdRouteWithChildren,
+  AuthenticatedClientsNewRoute: AuthenticatedClientsNewRoute,
+  AuthenticatedMachinesMachineIdRoute:
+    AuthenticatedMachinesMachineIdRouteWithChildren,
+  AuthenticatedClientsIndexRoute: AuthenticatedClientsIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
