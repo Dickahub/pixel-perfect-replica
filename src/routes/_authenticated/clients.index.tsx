@@ -1,0 +1,88 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { Plus, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useClients } from "@/hooks/use-clients";
+import { useCurrentUser } from "@/hooks/use-current-user";
+
+export const Route = createFileRoute("/_authenticated/clients/")({
+  head: () => ({ meta: [{ title: "Clients — SRMMS" }] }),
+  component: ClientsIndex,
+});
+
+function ClientsIndex() {
+  const [search, setSearch] = useState("");
+  const { data: clients, isLoading } = useClients(search);
+  const { hasAny } = useCurrentUser();
+  const canCreate = hasAny(["Admin", "Receptionist"]);
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Clients</h1>
+          <p className="text-sm text-muted-foreground">Customers and their equipment.</p>
+        </div>
+        {canCreate && (
+          <Button asChild>
+            <Link to="/clients/new">
+              <Plus className="mr-2 h-4 w-4" />
+              New client
+            </Link>
+          </Button>
+        )}
+      </div>
+
+      <div className="relative max-w-sm">
+        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Input
+          placeholder="Search by name, contact, email, phone…"
+          className="pl-9"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+
+      <Card>
+        <CardContent className="p-0">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Contact</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Phone</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading ? (
+                <TableRow><TableCell colSpan={4} className="py-10 text-center text-muted-foreground">Loading…</TableCell></TableRow>
+              ) : !clients || clients.length === 0 ? (
+                <TableRow><TableCell colSpan={4} className="py-10 text-center text-muted-foreground">No clients yet.</TableCell></TableRow>
+              ) : (
+                clients.map((c) => (
+                  <TableRow key={c.id} className="cursor-pointer" onClick={(e) => {
+                    // let inner links keep working
+                    if ((e.target as HTMLElement).closest("a")) return;
+                  }}>
+                    <TableCell className="font-medium">
+                      <Link to="/clients/$clientId" params={{ clientId: c.id }} className="hover:underline">
+                        {c.name}
+                      </Link>
+                    </TableCell>
+                    <TableCell>{c.contact_person ?? "—"}</TableCell>
+                    <TableCell>{c.email ?? "—"}</TableCell>
+                    <TableCell>{c.phone ?? "—"}</TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
