@@ -130,6 +130,84 @@ export type Database = {
         }
         Relationships: []
       }
+      repairs: {
+        Row: {
+          assigned_to: string | null
+          client_id: string
+          completed_at: string | null
+          cost: number | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          diagnosis: string | null
+          due_date: string | null
+          id: string
+          intake_date: string
+          machine_id: string | null
+          order_number: string
+          priority: Database["public"]["Enums"]["repair_priority"]
+          resolution: string | null
+          status: Database["public"]["Enums"]["repair_status"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          client_id: string
+          completed_at?: string | null
+          cost?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          diagnosis?: string | null
+          due_date?: string | null
+          id?: string
+          intake_date?: string
+          machine_id?: string | null
+          order_number?: string
+          priority?: Database["public"]["Enums"]["repair_priority"]
+          resolution?: string | null
+          status?: Database["public"]["Enums"]["repair_status"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          client_id?: string
+          completed_at?: string | null
+          cost?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          diagnosis?: string | null
+          due_date?: string | null
+          id?: string
+          intake_date?: string
+          machine_id?: string | null
+          order_number?: string
+          priority?: Database["public"]["Enums"]["repair_priority"]
+          resolution?: string | null
+          status?: Database["public"]["Enums"]["repair_status"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "repairs_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "repairs_machine_id_fkey"
+            columns: ["machine_id"]
+            isOneToOne: false
+            referencedRelation: "machines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -156,6 +234,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_repair_number: { Args: never; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -166,6 +245,13 @@ export type Database = {
     }
     Enums: {
       app_role: "Admin" | "Technician" | "Receptionist"
+      repair_priority: "low" | "normal" | "high" | "urgent"
+      repair_status:
+        | "pending"
+        | "in_progress"
+        | "awaiting_parts"
+        | "completed"
+        | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -294,6 +380,14 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["Admin", "Technician", "Receptionist"],
+      repair_priority: ["low", "normal", "high", "urgent"],
+      repair_status: [
+        "pending",
+        "in_progress",
+        "awaiting_parts",
+        "completed",
+        "cancelled",
+      ],
     },
   },
 } as const
