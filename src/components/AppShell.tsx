@@ -30,7 +30,7 @@ const NAV: NavItem[] = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/repairs", label: "Repairs", icon: Wrench },
   { to: "/clients", label: "Clients & Machines", icon: Users, roles: ["Admin", "Receptionist"] },
-  { to: "/inventory", label: "Inventory", icon: Package, roles: ["Admin", "Technician"] },
+  { to: "/parts", label: "Inventory", icon: Package },
   { to: "/locations", label: "Storage Locations", icon: MapPin, roles: ["Admin", "Technician"] },
   { to: "/notifications", label: "Notifications", icon: Bell, roles: ["Admin", "Receptionist"] },
   { to: "/audit", label: "Audit Log", icon: ClipboardList, roles: ["Admin"] },
