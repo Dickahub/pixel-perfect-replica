@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useRepair, useDeleteRepair, useUpdateRepair, REPAIR_STATUSES, STATUS_LABEL, type RepairStatus } from "@/hooks/use-repairs";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { PriorityBadge, StatusBadge } from "@/components/repairs/StatusBadge";
+import { RepairPartsSection } from "@/components/repairs/RepairPartsSection";
 
 export const Route = createFileRoute("/_authenticated/repairs/$repairId")({
   head: () => ({ meta: [{ title: "Repair — SRMMS" }] }),
@@ -131,6 +132,8 @@ function RepairDetail() {
           </CardContent>
         </Card>
       </div>
+
+      <RepairPartsSection repairId={repair.id} />
 
       <AlertDialog open={confirmDelete} onOpenChange={setConfirmDelete}>
         <AlertDialogContent>
