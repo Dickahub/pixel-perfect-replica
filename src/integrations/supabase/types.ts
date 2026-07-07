@@ -106,6 +106,57 @@ export type Database = {
           },
         ]
       }
+      parts: {
+        Row: {
+          category: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          location: string | null
+          name: string
+          quantity_on_hand: number
+          reorder_level: number
+          sku: string
+          unit: string
+          unit_cost: number
+          unit_price: number
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          name: string
+          quantity_on_hand?: number
+          reorder_level?: number
+          sku: string
+          unit?: string
+          unit_cost?: number
+          unit_price?: number
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          name?: string
+          quantity_on_hand?: number
+          reorder_level?: number
+          sku?: string
+          unit?: string
+          unit_cost?: number
+          unit_price?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -129,6 +180,60 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      repair_parts: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          line_total: number | null
+          notes: string | null
+          part_id: string
+          quantity: number
+          repair_id: string
+          unit_price: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          line_total?: number | null
+          notes?: string | null
+          part_id: string
+          quantity: number
+          repair_id: string
+          unit_price?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          line_total?: number | null
+          notes?: string | null
+          part_id?: string
+          quantity?: number
+          repair_id?: string
+          unit_price?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "repair_parts_part_id_fkey"
+            columns: ["part_id"]
+            isOneToOne: false
+            referencedRelation: "parts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "repair_parts_repair_id_fkey"
+            columns: ["repair_id"]
+            isOneToOne: false
+            referencedRelation: "repairs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       repairs: {
         Row: {
