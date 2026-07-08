@@ -22,11 +22,14 @@ import { Route as AuthenticatedRepairsRepairIdRouteImport } from './routes/_auth
 import { Route as AuthenticatedPartsNewRouteImport } from './routes/_authenticated/parts.new'
 import { Route as AuthenticatedPartsPartIdRouteImport } from './routes/_authenticated/parts.$partId'
 import { Route as AuthenticatedMachinesMachineIdRouteImport } from './routes/_authenticated/machines.$machineId'
+import { Route as AuthenticatedLocationsNewRouteImport } from './routes/_authenticated/locations.new'
+import { Route as AuthenticatedLocationsLocationIdRouteImport } from './routes/_authenticated/locations.$locationId'
 import { Route as AuthenticatedClientsNewRouteImport } from './routes/_authenticated/clients.new'
 import { Route as AuthenticatedClientsClientIdRouteImport } from './routes/_authenticated/clients.$clientId'
 import { Route as AuthenticatedRepairsRepairIdEditRouteImport } from './routes/_authenticated/repairs.$repairId.edit'
 import { Route as AuthenticatedPartsPartIdEditRouteImport } from './routes/_authenticated/parts.$partId.edit'
 import { Route as AuthenticatedMachinesMachineIdEditRouteImport } from './routes/_authenticated/machines.$machineId.edit'
+import { Route as AuthenticatedLocationsLocationIdEditRouteImport } from './routes/_authenticated/locations.$locationId.edit'
 import { Route as AuthenticatedClientsClientIdEditRouteImport } from './routes/_authenticated/clients.$clientId.edit'
 
 const AuthRoute = AuthRouteImport.update({
@@ -99,6 +102,18 @@ const AuthenticatedMachinesMachineIdRoute =
     path: '/machines/$machineId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedLocationsNewRoute =
+  AuthenticatedLocationsNewRouteImport.update({
+    id: '/locations/new',
+    path: '/locations/new',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLocationsLocationIdRoute =
+  AuthenticatedLocationsLocationIdRouteImport.update({
+    id: '/locations/$locationId',
+    path: '/locations/$locationId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedClientsNewRoute = AuthenticatedClientsNewRouteImport.update({
   id: '/clients/new',
   path: '/clients/new',
@@ -128,6 +143,12 @@ const AuthenticatedMachinesMachineIdEditRoute =
     path: '/edit',
     getParentRoute: () => AuthenticatedMachinesMachineIdRoute,
   } as any)
+const AuthenticatedLocationsLocationIdEditRoute =
+  AuthenticatedLocationsLocationIdEditRouteImport.update({
+    id: '/edit',
+    path: '/edit',
+    getParentRoute: () => AuthenticatedLocationsLocationIdRoute,
+  } as any)
 const AuthenticatedClientsClientIdEditRoute =
   AuthenticatedClientsClientIdEditRouteImport.update({
     id: '/edit',
@@ -141,6 +162,8 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/clients/$clientId': typeof AuthenticatedClientsClientIdRouteWithChildren
   '/clients/new': typeof AuthenticatedClientsNewRoute
+  '/locations/$locationId': typeof AuthenticatedLocationsLocationIdRouteWithChildren
+  '/locations/new': typeof AuthenticatedLocationsNewRoute
   '/machines/$machineId': typeof AuthenticatedMachinesMachineIdRouteWithChildren
   '/parts/$partId': typeof AuthenticatedPartsPartIdRouteWithChildren
   '/parts/new': typeof AuthenticatedPartsNewRoute
@@ -151,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/parts/': typeof AuthenticatedPartsIndexRoute
   '/repairs/': typeof AuthenticatedRepairsIndexRoute
   '/clients/$clientId/edit': typeof AuthenticatedClientsClientIdEditRoute
+  '/locations/$locationId/edit': typeof AuthenticatedLocationsLocationIdEditRoute
   '/machines/$machineId/edit': typeof AuthenticatedMachinesMachineIdEditRoute
   '/parts/$partId/edit': typeof AuthenticatedPartsPartIdEditRoute
   '/repairs/$repairId/edit': typeof AuthenticatedRepairsRepairIdEditRoute
@@ -161,6 +185,8 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/clients/$clientId': typeof AuthenticatedClientsClientIdRouteWithChildren
   '/clients/new': typeof AuthenticatedClientsNewRoute
+  '/locations/$locationId': typeof AuthenticatedLocationsLocationIdRouteWithChildren
+  '/locations/new': typeof AuthenticatedLocationsNewRoute
   '/machines/$machineId': typeof AuthenticatedMachinesMachineIdRouteWithChildren
   '/parts/$partId': typeof AuthenticatedPartsPartIdRouteWithChildren
   '/parts/new': typeof AuthenticatedPartsNewRoute
@@ -171,6 +197,7 @@ export interface FileRoutesByTo {
   '/parts': typeof AuthenticatedPartsIndexRoute
   '/repairs': typeof AuthenticatedRepairsIndexRoute
   '/clients/$clientId/edit': typeof AuthenticatedClientsClientIdEditRoute
+  '/locations/$locationId/edit': typeof AuthenticatedLocationsLocationIdEditRoute
   '/machines/$machineId/edit': typeof AuthenticatedMachinesMachineIdEditRoute
   '/parts/$partId/edit': typeof AuthenticatedPartsPartIdEditRoute
   '/repairs/$repairId/edit': typeof AuthenticatedRepairsRepairIdEditRoute
@@ -183,6 +210,8 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/clients/$clientId': typeof AuthenticatedClientsClientIdRouteWithChildren
   '/_authenticated/clients/new': typeof AuthenticatedClientsNewRoute
+  '/_authenticated/locations/$locationId': typeof AuthenticatedLocationsLocationIdRouteWithChildren
+  '/_authenticated/locations/new': typeof AuthenticatedLocationsNewRoute
   '/_authenticated/machines/$machineId': typeof AuthenticatedMachinesMachineIdRouteWithChildren
   '/_authenticated/parts/$partId': typeof AuthenticatedPartsPartIdRouteWithChildren
   '/_authenticated/parts/new': typeof AuthenticatedPartsNewRoute
@@ -193,6 +222,7 @@ export interface FileRoutesById {
   '/_authenticated/parts/': typeof AuthenticatedPartsIndexRoute
   '/_authenticated/repairs/': typeof AuthenticatedRepairsIndexRoute
   '/_authenticated/clients/$clientId/edit': typeof AuthenticatedClientsClientIdEditRoute
+  '/_authenticated/locations/$locationId/edit': typeof AuthenticatedLocationsLocationIdEditRoute
   '/_authenticated/machines/$machineId/edit': typeof AuthenticatedMachinesMachineIdEditRoute
   '/_authenticated/parts/$partId/edit': typeof AuthenticatedPartsPartIdEditRoute
   '/_authenticated/repairs/$repairId/edit': typeof AuthenticatedRepairsRepairIdEditRoute
@@ -205,6 +235,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/clients/$clientId'
     | '/clients/new'
+    | '/locations/$locationId'
+    | '/locations/new'
     | '/machines/$machineId'
     | '/parts/$partId'
     | '/parts/new'
@@ -215,6 +247,7 @@ export interface FileRouteTypes {
     | '/parts/'
     | '/repairs/'
     | '/clients/$clientId/edit'
+    | '/locations/$locationId/edit'
     | '/machines/$machineId/edit'
     | '/parts/$partId/edit'
     | '/repairs/$repairId/edit'
@@ -225,6 +258,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/clients/$clientId'
     | '/clients/new'
+    | '/locations/$locationId'
+    | '/locations/new'
     | '/machines/$machineId'
     | '/parts/$partId'
     | '/parts/new'
@@ -235,6 +270,7 @@ export interface FileRouteTypes {
     | '/parts'
     | '/repairs'
     | '/clients/$clientId/edit'
+    | '/locations/$locationId/edit'
     | '/machines/$machineId/edit'
     | '/parts/$partId/edit'
     | '/repairs/$repairId/edit'
@@ -246,6 +282,8 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/clients/$clientId'
     | '/_authenticated/clients/new'
+    | '/_authenticated/locations/$locationId'
+    | '/_authenticated/locations/new'
     | '/_authenticated/machines/$machineId'
     | '/_authenticated/parts/$partId'
     | '/_authenticated/parts/new'
@@ -256,6 +294,7 @@ export interface FileRouteTypes {
     | '/_authenticated/parts/'
     | '/_authenticated/repairs/'
     | '/_authenticated/clients/$clientId/edit'
+    | '/_authenticated/locations/$locationId/edit'
     | '/_authenticated/machines/$machineId/edit'
     | '/_authenticated/parts/$partId/edit'
     | '/_authenticated/repairs/$repairId/edit'
@@ -360,6 +399,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMachinesMachineIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/locations/new': {
+      id: '/_authenticated/locations/new'
+      path: '/locations/new'
+      fullPath: '/locations/new'
+      preLoaderRoute: typeof AuthenticatedLocationsNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/locations/$locationId': {
+      id: '/_authenticated/locations/$locationId'
+      path: '/locations/$locationId'
+      fullPath: '/locations/$locationId'
+      preLoaderRoute: typeof AuthenticatedLocationsLocationIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/clients/new': {
       id: '/_authenticated/clients/new'
       path: '/clients/new'
@@ -395,6 +448,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMachinesMachineIdEditRouteImport
       parentRoute: typeof AuthenticatedMachinesMachineIdRoute
     }
+    '/_authenticated/locations/$locationId/edit': {
+      id: '/_authenticated/locations/$locationId/edit'
+      path: '/edit'
+      fullPath: '/locations/$locationId/edit'
+      preLoaderRoute: typeof AuthenticatedLocationsLocationIdEditRouteImport
+      parentRoute: typeof AuthenticatedLocationsLocationIdRoute
+    }
     '/_authenticated/clients/$clientId/edit': {
       id: '/_authenticated/clients/$clientId/edit'
       path: '/edit'
@@ -418,6 +478,21 @@ const AuthenticatedClientsClientIdRouteChildren: AuthenticatedClientsClientIdRou
 const AuthenticatedClientsClientIdRouteWithChildren =
   AuthenticatedClientsClientIdRoute._addFileChildren(
     AuthenticatedClientsClientIdRouteChildren,
+  )
+
+interface AuthenticatedLocationsLocationIdRouteChildren {
+  AuthenticatedLocationsLocationIdEditRoute: typeof AuthenticatedLocationsLocationIdEditRoute
+}
+
+const AuthenticatedLocationsLocationIdRouteChildren: AuthenticatedLocationsLocationIdRouteChildren =
+  {
+    AuthenticatedLocationsLocationIdEditRoute:
+      AuthenticatedLocationsLocationIdEditRoute,
+  }
+
+const AuthenticatedLocationsLocationIdRouteWithChildren =
+  AuthenticatedLocationsLocationIdRoute._addFileChildren(
+    AuthenticatedLocationsLocationIdRouteChildren,
   )
 
 interface AuthenticatedMachinesMachineIdRouteChildren {
@@ -468,6 +543,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedClientsClientIdRoute: typeof AuthenticatedClientsClientIdRouteWithChildren
   AuthenticatedClientsNewRoute: typeof AuthenticatedClientsNewRoute
+  AuthenticatedLocationsLocationIdRoute: typeof AuthenticatedLocationsLocationIdRouteWithChildren
+  AuthenticatedLocationsNewRoute: typeof AuthenticatedLocationsNewRoute
   AuthenticatedMachinesMachineIdRoute: typeof AuthenticatedMachinesMachineIdRouteWithChildren
   AuthenticatedPartsPartIdRoute: typeof AuthenticatedPartsPartIdRouteWithChildren
   AuthenticatedPartsNewRoute: typeof AuthenticatedPartsNewRoute
@@ -484,6 +561,9 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClientsClientIdRoute:
     AuthenticatedClientsClientIdRouteWithChildren,
   AuthenticatedClientsNewRoute: AuthenticatedClientsNewRoute,
+  AuthenticatedLocationsLocationIdRoute:
+    AuthenticatedLocationsLocationIdRouteWithChildren,
+  AuthenticatedLocationsNewRoute: AuthenticatedLocationsNewRoute,
   AuthenticatedMachinesMachineIdRoute:
     AuthenticatedMachinesMachineIdRouteWithChildren,
   AuthenticatedPartsPartIdRoute: AuthenticatedPartsPartIdRouteWithChildren,
