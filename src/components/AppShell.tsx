@@ -6,7 +6,6 @@ import {
   Users,
   Package,
   MapPin,
-  Bell,
   ClipboardList,
   LogOut,
   Menu,
@@ -18,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import secelLogo from "@/assets/secel-logo.png.asset.json";
+import { NotificationsBell } from "@/components/notifications/NotificationsBell";
 
 type NavItem = {
   to: string;
@@ -32,7 +32,6 @@ const NAV: NavItem[] = [
   { to: "/clients", label: "Clients & Machines", icon: Users, roles: ["Admin", "Receptionist"] },
   { to: "/parts", label: "Inventory", icon: Package },
   { to: "/locations", label: "Storage Locations", icon: MapPin, roles: ["Admin", "Technician"] },
-  { to: "/notifications", label: "Notifications", icon: Bell, roles: ["Admin", "Receptionist"] },
   { to: "/audit", label: "Audit Log", icon: ClipboardList, roles: ["Admin"] },
   { to: "/users", label: "Users", icon: Users, roles: ["Admin"] },
 ];
@@ -52,20 +51,23 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex min-h-screen bg-muted/30">
+    <div className="flex min-h-screen bg-muted/40">
       {/* Mobile top bar */}
       <div className="fixed inset-x-0 top-0 z-30 flex h-14 items-center justify-between border-b border-border bg-card px-4 md:hidden">
         <div className="flex items-center gap-2">
           <img src={secelLogo.url} alt="SECEL" className="h-6 w-auto" />
           <span className="font-semibold tracking-tight">SRMMS</span>
         </div>
-        <button
-          className="rounded-md p-2 hover:bg-muted"
-          onClick={() => setMobileOpen((v) => !v)}
-          aria-label="Toggle navigation"
-        >
-          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-1">
+          <NotificationsBell />
+          <button
+            className="rounded-md p-2 hover:bg-muted"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Toggle navigation"
+          >
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Sidebar */}
@@ -117,6 +119,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* Main */}
       <main className="flex-1 pt-14 md:pt-0">
+        <div className="sticky top-0 z-10 hidden h-14 items-center justify-end gap-2 border-b border-border bg-card/80 px-6 backdrop-blur md:flex">
+          <NotificationsBell />
+        </div>
         <div className="mx-auto max-w-7xl p-4 md:p-8">{children}</div>
       </main>
 
