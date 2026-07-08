@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_log: {
+        Row: {
+          action: string
+          actor_email: string | null
+          actor_user_id: string | null
+          created_at: string
+          diff: Json | null
+          entity_id: string | null
+          entity_label: string | null
+          entity_type: string
+          id: string
+        }
+        Insert: {
+          action: string
+          actor_email?: string | null
+          actor_user_id?: string | null
+          created_at?: string
+          diff?: Json | null
+          entity_id?: string | null
+          entity_label?: string | null
+          entity_type: string
+          id?: string
+        }
+        Update: {
+          action?: string
+          actor_email?: string | null
+          actor_user_id?: string | null
+          created_at?: string
+          diff?: Json | null
+          entity_id?: string | null
+          entity_label?: string | null
+          entity_type?: string
+          id?: string
+        }
+        Relationships: []
+      }
       clients: {
         Row: {
           address: string | null
@@ -52,6 +88,36 @@ export type Database = {
           notes?: string | null
           phone?: string | null
           tax_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      locations: {
+        Row: {
+          code: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          name?: string
           updated_at?: string
         }
         Relationships: []
@@ -106,6 +172,39 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          kind: string
+          link: string | null
+          read_at: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          link?: string | null
+          read_at?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          link?: string | null
+          read_at?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       parts: {
         Row: {
           category: string | null
@@ -114,6 +213,7 @@ export type Database = {
           description: string | null
           id: string
           location: string | null
+          location_id: string | null
           name: string
           quantity_on_hand: number
           reorder_level: number
@@ -130,6 +230,7 @@ export type Database = {
           description?: string | null
           id?: string
           location?: string | null
+          location_id?: string | null
           name: string
           quantity_on_hand?: number
           reorder_level?: number
@@ -146,6 +247,7 @@ export type Database = {
           description?: string | null
           id?: string
           location?: string | null
+          location_id?: string | null
           name?: string
           quantity_on_hand?: number
           reorder_level?: number
@@ -155,7 +257,15 @@ export type Database = {
           unit_price?: number
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "parts_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "locations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -248,6 +358,7 @@ export type Database = {
           due_date: string | null
           id: string
           intake_date: string
+          location_id: string | null
           machine_id: string | null
           order_number: string
           priority: Database["public"]["Enums"]["repair_priority"]
@@ -268,6 +379,7 @@ export type Database = {
           due_date?: string | null
           id?: string
           intake_date?: string
+          location_id?: string | null
           machine_id?: string | null
           order_number?: string
           priority?: Database["public"]["Enums"]["repair_priority"]
@@ -288,6 +400,7 @@ export type Database = {
           due_date?: string | null
           id?: string
           intake_date?: string
+          location_id?: string | null
           machine_id?: string | null
           order_number?: string
           priority?: Database["public"]["Enums"]["repair_priority"]
@@ -302,6 +415,13 @@ export type Database = {
             columns: ["client_id"]
             isOneToOne: false
             referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "repairs_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "locations"
             referencedColumns: ["id"]
           },
           {
